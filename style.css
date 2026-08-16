@@ -55,6 +55,39 @@ main {
   border-radius: 12px;
 }
 
+.mango {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 32px;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--borda);
+}
+
+.curiosidade {
+  color: var(--cor-secundaria);
+}
+
+figure {
+  margin: 0;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+figcaption {
+  margin-top: 8px;
+  color: var(--cor-secundaria);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
 footer {
   margin-top: 32px;
   font-size: 0.875rem;
@@ -67,5 +100,14 @@ footer {
 
   main {
     padding: 24px;
+  }
+
+  .mango {
+    grid-template-columns: 1fr;
+  }
+
+  figure {
+    max-width: 200px;
+    margin: 0 auto;
   }
 }
