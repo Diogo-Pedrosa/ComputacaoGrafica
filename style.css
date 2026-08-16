@@ -88,6 +88,39 @@ figcaption {
   text-align: center;
 }
 
+.desafio {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--borda);
+}
+
+.area-botao {
+  position: relative;
+  height: 170px;
+  overflow: hidden;
+  border: 1px dashed var(--borda);
+  border-radius: 8px;
+}
+
+#botao-fuja {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 10px 16px;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 6px;
+  background: var(--cor-destaque);
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  transition: left 150ms ease, top 150ms ease;
+}
+
+#botao-fuja:hover {
+  background: #115e59;
+}
+
 footer {
   margin-top: 32px;
   font-size: 0.875rem;

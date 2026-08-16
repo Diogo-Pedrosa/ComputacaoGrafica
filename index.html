@@ -50,10 +50,88 @@
         </figure>
       </section>
 
+      <section class="desafio" aria-labelledby="titulo-desafio">
+        <h2 id="titulo-desafio">Desafio do Mango Loco</h2>
+        <p id="mensagem-botao" aria-live="polite">
+          Tente clicar no botão antes que ele fuja.
+        </p>
+        <div id="area-botao" class="area-botao">
+          <button id="botao-fuja" type="button">Clique aqui</button>
+        </div>
+      </section>
+
     </main>
 
     <footer>
       <p>Trabalho Prático 0 — Computação Gráfica</p>
     </footer>
+
+    <script>
+      const areaBotao = document.querySelector('#area-botao');
+      const botaoFuja = document.querySelector('#botao-fuja');
+      const mensagemBotao = document.querySelector('#mensagem-botao');
+      const limiteDeFugas = 10;
+      const distanciaMinimaDeFuga = 100;
+      const intervaloEntreFugas = 450;
+      let quantidadeDeFugas = 0;
+      let instanteDaUltimaFuga = 0;
+
+      function moverBotao() {
+        const margem = 16;
+        const posicaoMaximaX = areaBotao.clientWidth - botaoFuja.offsetWidth - margem;
+        const posicaoMaximaY = areaBotao.clientHeight - botaoFuja.offsetHeight - margem;
+        const areaDoBotao = areaBotao.getBoundingClientRect();
+        const posicaoAtual = botaoFuja.getBoundingClientRect();
+        const posicaoAtualX = posicaoAtual.left - areaDoBotao.left;
+        const posicaoAtualY = posicaoAtual.top - areaDoBotao.top;
+        let novaPosicaoX;
+        let novaPosicaoY;
+
+        for (let tentativa = 0; tentativa < 20; tentativa += 1) {
+          novaPosicaoX = margem + Math.random() * (posicaoMaximaX - margem);
+          novaPosicaoY = margem + Math.random() * (posicaoMaximaY - margem);
+
+          const distanciaDaNovaPosicao = Math.hypot(
+            novaPosicaoX - posicaoAtualX,
+            novaPosicaoY - posicaoAtualY,
+          );
+
+          if (distanciaDaNovaPosicao >= distanciaMinimaDeFuga) {
+            break;
+          }
+        }
+
+        botaoFuja.style.left = `${novaPosicaoX}px`;
+        botaoFuja.style.top = `${novaPosicaoY}px`;
+        botaoFuja.style.transform = 'none';
+      }
+
+      areaBotao.addEventListener('mousemove', (evento) => {
+        if (quantidadeDeFugas >= limiteDeFugas) {
+          return;
+        }
+
+        const agora = Date.now();
+        if (agora - instanteDaUltimaFuga < intervaloEntreFugas) {
+          return;
+        }
+
+        const posicaoDoBotao = botaoFuja.getBoundingClientRect();
+        const centroX = posicaoDoBotao.left + posicaoDoBotao.width / 2;
+        const centroY = posicaoDoBotao.top + posicaoDoBotao.height / 2;
+        const distancia = Math.hypot(evento.clientX - centroX, evento.clientY - centroY);
+
+        if (distancia < 110) {
+          quantidadeDeFugas += 1;
+          instanteDaUltimaFuga = agora;
+          moverBotao();
+          mensagemBotao.textContent = `O Mango Loco fugiu ${quantidadeDeFugas} de ${limiteDeFugas} vez(es)!`;
+        }
+      });
+
+      botaoFuja.addEventListener('click', () => {
+        mensagemBotao.textContent = 'Você conseguiu! O prêmio é a amizade do Mango Loco.';
+      });
+    </script>
   </body>
 </html>
